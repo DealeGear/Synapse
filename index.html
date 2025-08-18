@@ -3,307 +3,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Synapse - Rede Social Experimental</title>
+    <title>Synapse - Rede de Ideias Interconectadas</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Barra de Navegação -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-brand">
-                <i class="fas fa-brain"></i>
-                <span>Synapse</span>
+    <!-- Tela de Login/Cadastro -->
+    <div id="authContainer" class="auth-container">
+        <div class="auth-box">
+            <div class="logo">
+                <h1>Synapse</h1>
+                <p>Rede de Ideias Interconectadas</p>
             </div>
-            <div class="nav-menu">
-                <button class="nav-btn" data-page="feed">
-                    <i class="fas fa-home"></i>
-                    <span>Feed</span>
-                </button>
-                <button class="nav-btn" data-page="explore">
-                    <i class="fas fa-compass"></i>
-                    <span>Explorar</span>
-                </button>
-                <button class="nav-btn" data-page="clusters">
-                    <i class="fas fa-users"></i>
-                    <span>Clusters</span>
-                </button>
-                <button class="nav-btn" data-page="connections">
-                    <i class="fas fa-network-wired"></i>
-                    <span>Conexões</span>
-                </button>
-                <button class="nav-btn" data-page="profile">
-                    <i class="fas fa-user"></i>
-                    <span>Perfil</span>
-                </button>
-            </div>
-            <div class="nav-actions">
-                <button id="theme-toggle" class="theme-btn">
-                    <i class="fas fa-moon"></i>
-                </button>
-                <button id="notifications-btn" class="notifications-btn">
-                    <i class="fas fa-bell"></i>
-                    <span class="notification-badge" style="display: none;">0</span>
-                </button>
-                <button id="logout-btn" class="logout-btn" style="display: none;">
-                    <i class="fas fa-sign-out-alt"></i>
-                </button>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Container Principal -->
-    <div class="main-container">
-        <!-- Página de Login/Cadastro -->
-        <div id="auth-page" class="page active">
-            <div class="auth-container">
-                <div class="auth-card">
-                    <div class="auth-header">
-                        <i class="fas fa-brain"></i>
-                        <h1>Bem-vindo ao Synapse</h1>
-                        <p>Conecte-se em uma nova dimensão social</p>
+            
+            <form id="authForm">
+                <div id="loginFields">
+                    <div class="form-group">
+                        <label for="loginUsername">Nome de usuário</label>
+                        <input type="text" id="loginUsername" required>
                     </div>
-                    
-                    <div class="auth-tabs">
-                        <button class="auth-tab active" data-tab="login">Entrar</button>
-                        <button class="auth-tab" data-tab="register">Cadastrar</button>
+                    <div class="form-group">
+                        <label for="loginPassword">Senha</label>
+                        <input type="password" id="loginPassword" required>
                     </div>
-
-                    <!-- Formulário de Login -->
-                    <form id="login-form" class="auth-form active">
-                        <div class="form-group">
-                            <label for="login-username">Nome de usuário</label>
-                            <input type="text" id="login-username" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="login-password">Senha</label>
-                            <input type="password" id="login-password" required>
-                        </div>
-                        <button type="submit" class="btn-primary">Entrar</button>
-                    </form>
-
-                    <!-- Formulário de Cadastro -->
-                    <form id="register-form" class="auth-form">
-                        <div class="form-group">
-                            <label for="register-username">Nome de usuário</label>
-                            <input type="text" id="register-username" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="register-password">Senha</label>
-                            <input type="password" id="register-password" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="register-bio">Biografia (opcional)</label>
-                            <textarea id="register-bio" rows="3"></textarea>
-                        </div>
-                        <button type="submit" class="btn-primary">Cadastrar</button>
-                    </form>
+                    <button type="submit" class="btn btn-primary">Entrar</button>
                 </div>
-            </div>
-        </div>
-
-        <!-- Página do Feed -->
-        <div id="feed-page" class="page">
-            <div class="feed-container">
-                <!-- Barra Lateral -->
-                <aside class="sidebar">
-                    <div class="sidebar-section">
-                        <h3>Tendências</h3>
-                        <div id="trending-hashtags" class="trending-list">
-                            <!-- Hashtags em tendência serão inseridas aqui -->
-                        </div>
+                
+                <div id="registerFields" style="display: none;">
+                    <div class="form-group">
+                        <label for="registerUsername">Nome de usuário</label>
+                        <input type="text" id="registerUsername" required>
                     </div>
-                    
-                    <div class="sidebar-section">
-                        <h3>Conquistas</h3>
-                        <div id="achievements" class="achievements-list">
-                            <!-- Conquistas serão inseridas aqui -->
-                        </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Senha</label>
+                        <input type="password" id="registerPassword" required>
                     </div>
-                </aside>
-
-                <!-- Conteúdo Principal -->
-                <main class="feed-main">
-                    <!-- Caixa de Publicação -->
-                    <div class="post-box">
-                        <div class="post-box-header">
-                            <img id="current-user-avatar" src="https://picsum.photos/seed/default/50/50.jpg" alt="Avatar">
-                            <textarea id="post-content" placeholder="O que está acontecendo?"></textarea>
-                        </div>
-                        <div class="post-box-actions">
-                            <button class="post-action-btn" id="add-image-btn">
-                                <i class="fas fa-image"></i>
-                            </button>
-                            <button class="post-action-btn" id="add-link-btn">
-                                <i class="fas fa-link"></i>
-                            </button>
-                            <button class="btn-primary" id="publish-post-btn">Publicar</button>
-                        </div>
+                    <div class="form-group">
+                        <label for="registerAvatar">Avatar (opcional)</label>
+                        <input type="text" id="registerAvatar" placeholder="URL da imagem">
                     </div>
-
-                    <!-- Feed de Posts -->
-                    <div id="posts-feed" class="posts-feed">
-                        <!-- Posts serão inseridos aqui -->
-                    </div>
-                </main>
-
-                <!-- Barra Lateral Direita -->
-                <aside class="sidebar-right">
-                    <div class="sidebar-section">
-                        <h3>Sugestões</h3>
-                        <div id="user-suggestions" class="suggestions-list">
-                            <!-- Sugestões de usuários serão inseridas aqui -->
-                        </div>
-                    </div>
-                </aside>
-            </div>
-        </div>
-
-        <!-- Página de Explorar -->
-        <div id="explore-page" class="page">
-            <div class="explore-container">
-                <div class="explore-header">
-                    <h2>Explorar</h2>
-                    <div class="search-bar">
-                        <input type="text" id="search-input" placeholder="Buscar usuários, posts ou hashtags...">
-                        <button id="search-btn"><i class="fas fa-search"></i></button>
-                    </div>
+                    <button type="submit" class="btn btn-primary">Criar Conta</button>
                 </div>
-
-                <div class="explore-content">
-                    <div class="explore-tabs">
-                        <button class="explore-tab active" data-tab="posts">Posts</button>
-                        <button class="explore-tab" data-tab="users">Usuários</button>
-                        <button class="explore-tab" data-tab="hashtags">Hashtags</button>
-                    </div>
-
-                    <div id="explore-results" class="explore-results">
-                        <!-- Resultados da busca serão inseridos aqui -->
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Página de Clusters -->
-        <div id="clusters-page" class="page">
-            <div class="clusters-container">
-                <div class="clusters-header">
-                    <h2>Clusters</h2>
-                    <button class="btn-primary" id="create-cluster-btn">Criar Cluster</button>
-                </div>
-
-                <div class="clusters-grid" id="clusters-grid">
-                    <!-- Clusters serão inseridos aqui -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Página de Conexões -->
-        <div id="connections-page" class="page">
-            <div class="connections-container">
-                <div class="connections-header">
-                    <h2>Conexões</h2>
-                    <div class="view-toggle">
-                        <button class="view-btn active" data-view="list">
-                            <i class="fas fa-list"></i>
-                        </button>
-                        <button class="view-btn" data-view="graph">
-                            <i class="fas fa-project-diagram"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="connections-content">
-                    <div class="connections-tabs">
-                        <button class="connection-tab active" data-tab="following">Seguindo</button>
-                        <button class="connection-tab" data-tab="followers">Seguidores</button>
-                    </div>
-
-                    <div id="connections-list" class="connections-list">
-                        <!-- Lista de conexões será inserida aqui -->
-                    </div>
-
-                    <div id="connections-graph" class="connections-graph" style="display: none;">
-                        <canvas id="graph-canvas"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Página de Perfil -->
-        <div id="profile-page" class="page">
-            <div class="profile-container">
-                <div class="profile-header">
-                    <img id="profile-avatar" src="https://picsum.photos/seed/default/150/150.jpg" alt="Avatar" class="profile-avatar">
-                    <div class="profile-info">
-                        <h2 id="profile-username">Nome de Usuário</h2>
-                        <p id="profile-bio">Biografia do usuário</p>
-                        <div class="profile-stats">
-                            <span><strong id="profile-posts-count">0</strong> posts</span>
-                            <span><strong id="profile-following-count">0</strong> seguindo</span>
-                            <span><strong id="profile-followers-count">0</strong> seguidores</span>
-                        </div>
-                        <button class="btn-secondary" id="edit-profile-btn">Editar Perfil</button>
-                    </div>
-                </div>
-
-                <div class="profile-tabs">
-                    <button class="profile-tab active" data-tab="posts">Posts</button>
-                    <button class="profile-tab" data-tab="mindmap">Mapa Mental</button>
-                </div>
-
-                <div id="profile-posts" class="profile-posts">
-                    <!-- Posts do perfil serão inseridos aqui -->
-                </div>
-
-                <div id="profile-mindmap" class="profile-mindmap" style="display: none;">
-                    <canvas id="mindmap-canvas"></canvas>
-                </div>
+            </form>
+            
+            <div class="auth-toggle">
+                <span id="authToggleText">Não tem uma conta?</span>
+                <a href="#" id="authToggleLink">Cadastre-se</a>
             </div>
         </div>
     </div>
 
-    <!-- Modal de Notificações -->
-    <div id="notifications-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Notificações</h3>
-                <button class="close-modal">&times;</button>
+    <!-- Tela Principal -->
+    <div id="mainContainer" class="main-container">
+        <header>
+            <div class="header-left">
+                <div class="header-logo">Synapse</div>
+                <button class="theme-toggle" id="themeToggle">🌙</button>
             </div>
-            <div id="notifications-list" class="notifications-list">
-                <!-- Notificações serão inseridas aqui -->
-            </div>
+            <button class="logout-btn" id="logoutBtn">Sair</button>
+        </header>
+
+        <div class="main-content">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <button class="sidebar-btn" id="createNodeBtn">
+                    ✨ Criar Nó de Ideia
+                </button>
+                <button class="sidebar-btn" id="profileBtn">
+                    👤 Ver Perfil
+                </button>
+                <button class="sidebar-btn" id="randomNodeBtn">
+                    🎲 Explorar Nó Aleatório
+                </button>
+            </aside>
+
+            <!-- Mapa de Ideias -->
+            <main class="idea-map" id="ideaMap">
+                <canvas id="canvas"></canvas>
+            </main>
+
+            <!-- Painel de Exploração -->
+            <aside class="exploration-panel">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Buscar por tags ou palavras-chave...">
+                </div>
+                
+                <div class="tags-section">
+                    <h3>Tags Populares</h3>
+                    <div class="tag-cloud" id="popularTags">
+                        <span class="tag">tecnologia</span>
+                        <span class="tag">filosofia</span>
+                        <span class="tag">arte</span>
+                        <span class="tag">ciência</span>
+                        <span class="tag">inovação</span>
+                    </div>
+                </div>
+            </aside>
         </div>
     </div>
 
-    <!-- Modal de Denúncia -->
-    <div id="report-modal" class="modal">
+    <!-- Modal de Criação/Edição de Nó -->
+    <div class="modal" id="nodeModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Denunciar</h3>
-                <button class="close-modal">&times;</button>
+                <h2 id="modalTitle">Criar Nova Ideia</h2>
+                <button class="close-modal" id="closeModal">&times;</button>
             </div>
-            <form id="report-form">
+            
+            <form id="nodeForm" class="create-form">
                 <div class="form-group">
-                    <label>Motivo da denúncia</label>
-                    <select id="report-reason" required>
-                        <option value="">Selecione um motivo</option>
-                        <option value="spam">Spam</option>
-                        <option value="harassment">Assédio</option>
-                        <option value="inappropriate">Conteúdo inadequado</option>
-                        <option value="other">Outro</option>
-                    </select>
+                    <label for="nodeContent">Conteúdo da Ideia</label>
+                    <textarea id="nodeContent" placeholder="Digite sua ideia aqui..." required></textarea>
                 </div>
+                
                 <div class="form-group">
-                    <label>Descrição adicional</label>
-                    <textarea id="report-description" rows="3"></textarea>
+                    <label for="nodeLink">Link (opcional)</label>
+                    <input type="url" id="nodeLink" placeholder="https://...">
                 </div>
-                <button type="submit" class="btn-primary">Enviar Denúncia</button>
+                
+                <div class="form-group">
+                    <label>Tags</label>
+                    <div class="tags-input" id="tagsInput">
+                        <input type="text" id="tagInput" placeholder="Adicionar tag...">
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Salvar Nó</button>
             </form>
         </div>
     </div>
 
+    <!-- Modal de Visualização de Nó -->
+    <div class="modal" id="viewNodeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="viewNodeTitle">Ideia</h2>
+                <button class="close-modal" id="closeViewModal">&times;</button>
+            </div>
+            
+            <div id="viewNodeContent">
+                <div class="form-group">
+                    <p id="viewNodeText"></p>
+                </div>
+                
+                <div class="form-group">
+                    <strong>Autor:</strong> <span id="viewNodeAuthor"></span>
+                </div>
+                
+                <div class="form-group">
+                    <strong>Criado em:</strong> <span id="viewNodeDate"></span>
+                </div>
+                
+                <div class="form-group" id="viewNodeLinkGroup" style="display: none;">
+                    <strong>Link:</strong> <a id="viewNodeLink" target="_blank"></a>
+                </div>
+                
+                <div class="form-group">
+                    <strong>Tags:</strong>
+                    <div class="tag-cloud" id="viewNodeTags"></div>
+                </div>
+                
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button class="btn btn-primary" id="createSparkBtn">⚡ Criar Faísca</button>
+                    <button class="btn btn-primary" id="commentBtn">💬 Comentar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tela de Perfil -->
+    <div id="profileContainer" style="display: none;">
+        <header>
+            <div class="header-left">
+                <button class="theme-toggle" id="profileThemeToggle">🌙</button>
+            </div>
+            <button class="logout-btn" id="profileLogoutBtn">Sair</button>
+        </header>
+
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar" id="profileAvatar">👤</div>
+                <h1 id="profileUsername">Usuário</h1>
+            </div>
+
+            <div class="profile-stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="nodesCount">0</div>
+                    <div class="stat-label">Nós Criados</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="sparksCount">0</div>
+                    <div class="stat-label">Faíscas Geradas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="branchesCount">0</div>
+                    <div class="stat-label">Ramificações</div>
+                </div>
+            </div>
+
+            <h2 style="margin-bottom: 20px;">Seus Nós</h2>
+            <div class="user-nodes" id="userNodes"></div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
-    <footer>Versão 0.1</footer>
 </body>
 </html>
