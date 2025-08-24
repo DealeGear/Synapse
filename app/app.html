@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synapse - Plataforma de Colaboração</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Tela de Login/Cadastro -->
+    <div id="loginScreen" class="screen active">
+        <div class="container">
+            <div class="login-container">
+                <h1>Synapse</h1>
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="login">Entrar</button>
+                    <button class="tab-btn" data-tab="register">Criar Conta</button>
+                </div>
+                
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginName">Nome</label>
+                        <input type="text" id="loginName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Senha</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Entrar</button>
+                </form>
+                
+                <form id="registerForm" class="hidden">
+                    <div class="form-group">
+                        <label for="registerName">Nome</label>
+                        <input type="text" id="registerName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Senha</label>
+                        <input type="password" id="registerPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerRole">Função</label>
+                        <select id="registerRole" required>
+                            <option value="Projetista">Projetista</option>
+                            <option value="Conselheiro">Conselheiro</option>
+                            <option value="Conciliador">Conciliador</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-primary">Criar Conta</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboardScreen" class="screen">
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <h1>Synapse</h1>
+                    <div class="user-info">
+                        <span id="userName"></span>
+                        <button id="logoutBtn" class="btn-secondary">Sair</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="container">
+            <div class="dashboard-layout">
+                <!-- Menu Lateral -->
+                <aside class="sidebar">
+                    <nav>
+                        <ul>
+                            <li><a href="#" id="createIdeaBtn" class="nav-item active">Criar Ideia</a></li>
+                            <li><a href="#" id="viewProjectsBtn" class="nav-item">Ver Projetos</a></li>
+                            <li><a href="#" id="profileBtn" class="nav-item">Perfil</a></li>
+                        </ul>
+                    </nav>
+                </aside>
+                
+                <!-- Conteúdo Principal -->
+                <main class="main-content">
+                    <!-- Seção Criar Ideia -->
+                    <section id="createIdeaSection" class="content-section active">
+                        <h2>Criar Nova Ideia</h2>
+                        <div class="card">
+                            <form id="createProjectForm">
+                                <div class="form-group">
+                                    <label for="projectTitle">Título</label>
+                                    <input type="text" id="projectTitle" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="projectDescription">Descrição</label>
+                                    <textarea id="projectDescription" rows="5" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="projectTags">Tags (separadas por vírgula)</label>
+                                    <input type="text" id="projectTags" placeholder="ex: tecnologia, inovação, design">
+                                </div>
+                                <div class="form-group">
+                                    <label>Conselheiros para convidar</label>
+                                    <div id="advisorsList" class="advisors-list">
+                                        <!-- Lista de conselheiros será preenchida via JavaScript -->
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn-primary">Salvar Projeto</button>
+                            </form>
+                        </div>
+                    </section>
+                    
+                    <!-- Seção Ver Projetos -->
+                    <section id="viewProjectsSection" class="content-section">
+                        <h2>Projetos</h2>
+                        <div class="tabs">
+                            <button class="tab-btn active" data-tab="myProjects">Meus Projetos</button>
+                            <button class="tab-btn" data-tab="invitations">Convites</button>
+                            <button class="tab-btn" data-tab="allProjects">Todos Projetos</button>
+                        </div>
+                        
+                        <div id="myProjectsTab" class="tab-content active">
+                            <div id="myProjectsList" class="projects-grid">
+                                <!-- Lista de projetos do usuário será preenchida via JavaScript -->
+                            </div>
+                        </div>
+                        
+                        <div id="invitationsTab" class="tab-content">
+                            <div id="invitationsList" class="projects-grid">
+                                <!-- Lista de convites será preenchida via JavaScript -->
+                            </div>
+                        </div>
+                        
+                        <div id="allProjectsTab" class="tab-content">
+                            <div id="allProjectsList" class="projects-grid">
+                                <!-- Lista de todos projetos será preenchida via JavaScript -->
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Seção Perfil -->
+                    <section id="profileSection" class="content-section">
+                        <h2>Meu Perfil</h2>
+                        <div class="card">
+                            <div class="profile-info">
+                                <div class="info-item">
+                                    <span class="label">Nome:</span>
+                                    <span id="profileName"></span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">Função:</span>
+                                    <span id="profileRole"></span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">Avaliação Média:</span>
+                                    <span id="profileRating"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="changeRole">Alterar Função</label>
+                                <select id="changeRole">
+                                    <option value="Projetista">Projetista</option>
+                                    <option value="Conselheiro">Conselheiro</option>
+                                    <option value="Conciliador">Conciliador</option>
+                                </select>
+                                <button id="updateRoleBtn" class="btn-primary">Atualizar</button>
+                            </div>
+                            
+                            <h3>Histórico de Atividades</h3>
+                            <div id="userHistory" class="history-list">
+                                <!-- Histórico do usuário será preenchido via JavaScript -->
+                            </div>
+                        </div>
+                    </section>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Detalhes do Projeto -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="projectDetails">
+                <!-- Detalhes do projeto serão preenchidos via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Opinião -->
+    <div id="opinionModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Enviar Opinião</h2>
+            <form id="opinionForm">
+                <div class="form-group">
+                    <label for="opinionText">Sua Opinião</label>
+                    <textarea id="opinionText" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn-primary">Enviar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Mediação -->
+    <div id="mediationModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Mediação de Conflito</h2>
+            <form id="mediationForm">
+                <div class="form-group">
+                    <label for="mediationText">Sua Sugestão</label>
+                    <textarea id="mediationText" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn-primary">Enviar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Avaliação -->
+    <div id="ratingModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Avaliar Interação</h2>
+            <form id="ratingForm">
+                <div class="form-group">
+                    <label>Avalie de 1 a 5:</label>
+                    <div class="rating-options">
+                        <label><input type="radio" name="rating" value="1"> 1</label>
+                        <label><input type="radio" name="rating" value="2"> 2</label>
+                        <label><input type="radio" name="rating" value="3"> 3</label>
+                        <label><input type="radio" name="rating" value="4"> 4</label>
+                        <label><input type="radio" name="rating" value="5"> 5</label>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary">Enviar Avaliação</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
